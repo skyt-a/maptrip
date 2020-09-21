@@ -101,6 +101,10 @@ module.exports = {
         explicitSpread: 'ignore',
       },
     ],
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": "warn",
+    "no-shadow": "off",
+    "import/prefer-default-export": "off"
   },
   overrides: [
     {
