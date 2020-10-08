@@ -1,7 +1,9 @@
 import { RefObject, useEffect, useRef, useState } from 'react';
+import { useSetRecoilState } from 'recoil';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import { mapboxToken } from 'constant';
+import { mapboxRefState } from '../../recoil-atoms/map';
 
 mapboxgl.accessToken = mapboxToken;
 
@@ -10,6 +12,7 @@ mapboxgl.accessToken = mapboxToken;
  */
 export const useMapboxRef = (): RefObject<HTMLDivElement> => {
   const [map, setMap] = useState<mapboxgl.Map>();
+  const setMapboxRef = useSetRecoilState(mapboxRefState);
   const mapContainer = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -32,8 +35,9 @@ export const useMapboxRef = (): RefObject<HTMLDivElement> => {
     thisMap.addControl(control);
 
     thisMap.on('load', () => {
-      if (map) {
-        setMap(map);
+      if (thisMap) {
+        setMap(thisMap);
+        setMapboxRef(thisMap);
         thisMap.resize();
         thisMap.setLayoutProperty('country-label', 'text-field', [
           'get',
@@ -41,7 +45,7 @@ export const useMapboxRef = (): RefObject<HTMLDivElement> => {
         ]);
       }
     });
-  }, [map, mapContainer]);
+  }, [map, mapContainer, setMapboxRef]);
 
   return mapContainer;
 };

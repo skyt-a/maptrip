@@ -1,0 +1,42 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "yarn build:reflection && tsc",
+    "build:reflection": "NEXUS_SHOULD_EXIT_AFTER_REFLECTION=true ts-node api",
+    "dev": "ts-node-dev --transpile-only src/app",
+    "dev:migrate": "prisma migrate save --experimental -c && prisma migrate up --experimental -c",
+    "dev:typecheck": "tsc --watch --noEmit",
+    "format": "npx prettier --write './**/*.{ts,md}'",
+    "start": "NODE_ENV=production node .nexus/build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@prisma/cli": "^2.8.1",
+    "@types/node": "^14.11.5",
+    "ts-node": "^9.0.0",
+    "@types/eslint-plugin-prettier": "^3.1.0",
+    "@types/prettier": "^2.1.1",
+    "@typescript-eslint/eslint-plugin": "^4.1.1",
+    "@typescript-eslint/parser": "^4.1.1",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prefer-arrow": "^1.2.2",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.1.2",
+    "ts-node-dev": "^1.0.0-pre.62"
+  },
+  "dependencies": {
+    "@nexus/schema": "^0.16.0",
+    "@prisma/client": "^2.8.1",
+    "graphql": "^15.3.0",
+    "apollo-server-express": "^2.17.0",
+    "express": "^4.17.1",
+    "typescript": "^4.0.3"
+  }
+}

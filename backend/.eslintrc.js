@@ -5,9 +5,7 @@ module.exports = {
     es2020: true,
   },
   extends: [
-    'plugin:react/recommended',
     'airbnb',
-    'airbnb/hooks',
     'plugin:import/errors',
     'plugin:import/warnings',
     'plugin:import/typescript',
@@ -17,7 +15,6 @@ module.exports = {
     'plugin:prettier/recommended',
     'prettier',
     'prettier/@typescript-eslint',
-    'prettier/react',
     'prettier/standard',
   ],
   parser: '@typescript-eslint/parser',
@@ -36,8 +33,6 @@ module.exports = {
     'jsx-a11y',
     'prefer-arrow',
     'prettier',
-    'react',
-    'react-hooks',
   ],
   root: true,
   rules: {
@@ -74,9 +69,7 @@ module.exports = {
       'ignorePackages',
       {
         js: 'never',
-        jsx: 'never',
         ts: 'never',
-        tsx: 'never',
       },
     ],
     'prefer-arrow/prefer-arrow-functions': [
@@ -87,33 +80,12 @@ module.exports = {
         classPropertiesAllowed: false,
       },
     ],
-    'react/jsx-filename-extension': [
-      'error',
-      {
-        extensions: ['.jsx', '.tsx'],
-      },
-    ],
-    'react/jsx-props-no-spreading': [
-      'error',
-      {
-        html: 'enforce',
-        custom: 'enforce',
-        explicitSpread: 'ignore',
-      },
-    ],
+    'react/jsx-props-no-spreading': "off",
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": "warn",
     "no-shadow": "off",
     "import/prefer-default-export": "off"
   },
-  overrides: [
-    {
-      'files': ['*.tsx'],
-      'rules': {
-        'react/prop-types': 'off',
-      },
-    },
-  ],
   settings: {
     'import/resolver': {
       node: {

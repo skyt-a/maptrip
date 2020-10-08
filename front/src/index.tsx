@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import { RecoilRoot } from 'recoil';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
@@ -8,7 +9,9 @@ const root = document.getElementById('root') as HTMLElement;
 // TODO FIXME in future(unstable_createRoot → createRoot)
 ReactDOM.unstable_createRoot(root).render(
   <React.StrictMode>
-    <App />
+    <RecoilRoot>
+      <App />
+    </RecoilRoot>
   </React.StrictMode>,
 );
 

@@ -1,0 +1,22 @@
+version: "3"
+services:
+  mysql:
+    build: 
+      context: .
+      dockerfile: ./docker/mysql/DockerFile
+    container_name: mysql
+    environment:
+      - MYSQL_DATABASE=homestead
+      - MYSQL_USER=homestead
+      - MYSQL_PASSWORD=secret
+      - MYSQL_ROOT_PASSWORD=secret
+      - TZ=Asia/Tokyo
+    volumes:
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - mysql-store:/var/lib/mysql
+      - ./initdb.d:/docker-entrypoint-initdb.d:rw
+      - ./docker/mysql/log:/var/log/mysql
+    ports:
+      - 3306:3306
+volumes:
+  mysql-store:
