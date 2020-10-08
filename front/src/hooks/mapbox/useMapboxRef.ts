@@ -12,7 +12,7 @@ mapboxgl.accessToken = mapboxToken;
  */
 export const useMapboxRef = (): RefObject<HTMLDivElement> => {
   const [map, setMap] = useState<mapboxgl.Map>();
-  const setMapboxRef = useSetRecoilState(mapboxRefState);
+  // const setMapboxRef = useSetRecoilState(mapboxRefState);
   const mapContainer = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export const useMapboxRef = (): RefObject<HTMLDivElement> => {
     thisMap.on('load', () => {
       if (thisMap) {
         setMap(thisMap);
-        setMapboxRef(thisMap);
+        // setMapboxRef(thisMap);
         thisMap.resize();
         thisMap.setLayoutProperty('country-label', 'text-field', [
           'get',
@@ -45,7 +45,7 @@ export const useMapboxRef = (): RefObject<HTMLDivElement> => {
         ]);
       }
     });
-  }, [map, mapContainer, setMapboxRef]);
+  }, [map, mapContainer]);
 
   return mapContainer;
 };
