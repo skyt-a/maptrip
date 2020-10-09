@@ -1,14 +1,12 @@
-query getUser {
-  users {
+mutation createPost($title: String!, $content: String!, $longitude: Float!, $latitude: Float!, $authorId: Int!, $published: Boolean) {
+  createPost(title: $title, content: $content, published: $published, longitude: $longitude, latitude: $latitude, authorId: $authorId){
     id
-    name
-    email
-  }
-}
-
-mutation user($name:String!, $email: String!) {
-  createUser(name: $name, email: $email){
-    id
-    name
+    title
+    content
+    authorId
+    createdAt
+    longitude
+    latitude
+    published
   }
 }

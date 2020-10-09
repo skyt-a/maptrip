@@ -5,7 +5,6 @@ module.exports = {
     es2020: true,
   },
   extends: [
-    'airbnb',
     'plugin:import/errors',
     'plugin:import/warnings',
     'plugin:import/typescript',
@@ -19,9 +18,6 @@ module.exports = {
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
     ecmaVersion: 2020,
     project: './tsconfig.eslint.json',
     sourceType: 'module',
@@ -30,7 +26,6 @@ module.exports = {
   plugins: [
     '@typescript-eslint',
     'import',
-    'jsx-a11y',
     'prefer-arrow',
     'prettier',
   ],
@@ -80,7 +75,6 @@ module.exports = {
         classPropertiesAllowed: false,
       },
     ],
-    'react/jsx-props-no-spreading': "off",
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": "warn",
     "no-shadow": "off",

@@ -1,23 +1,39 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { useRecoilValue } from 'recoil';
+import mapboxgl from 'mapbox-gl';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
-  mapboxRefState,
+  markerRefState,
   MapViewMode,
   mapViewModeState,
 } from 'recoil-atoms/map';
+import { useMapboxRef } from './useMapboxRef';
 
 export const usePutMarkerOnMapbox = () => {
-  const mapboxRef = useRecoilValue(mapboxRefState);
-  const markerRef = useRef<mapboxgl.Marker>();
-  const mapViewMode = useRecoilValue(mapViewModeState);
+  const mapboxRef = useMapboxRef();
+  const [mapViewMode, setMapViewMode] = useRecoilState(mapViewModeState);
+  const setMarkerRef = useSetRecoilState(markerRefState);
   const onPutMarker = useCallback(
     (e) => {
-      if (mapViewMode !== MapViewMode.PutMarker) {
+      if (mapViewMode !== MapViewMode.PutMarker || !mapboxRef) {
         return;
       }
-      console.log(e);
+      const { lng, lat } = e.lngLat;
+      const marker = new mapboxgl.Marker()
+        .setLngLat([lng, lat])
+        .addTo(mapboxRef);
+      mapboxRef.flyTo({
+        center: [lng, lat],
+        duration: 400,
+        zoom: 20,
+        // @ts-ignore paddingプロパティが存在しないと怒られるので
+        padding: {
+          right: window.innerWidth * 0.4,
+        },
+      });
+      setMarkerRef({ ref: () => marker });
+      setMapViewMode(MapViewMode.EnterMarkerInfo);
     },
-    [mapViewMode],
+    [mapViewMode, mapboxRef, setMapViewMode, setMarkerRef],
   );
   useEffect(() => {
     if (!mapboxRef) {
@@ -25,5 +41,13 @@ export const usePutMarkerOnMapbox = () => {
     }
     mapboxRef.on('click', 'places', onPutMarker);
     mapboxRef.on('click', onPutMarker);
+
+    return () => {
+      if (!mapboxRef) {
+        return;
+      }
+      mapboxRef.off('click', 'places', onPutMarker);
+      mapboxRef.off('click', onPutMarker);
+    };
   }, [mapboxRef, onPutMarker]);
 };

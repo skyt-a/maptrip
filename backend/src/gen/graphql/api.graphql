@@ -2,12 +2,27 @@
 ### Do not make changes to this file directly
 
 
+"""Date custom scalar type"""
+scalar Date
+
 type Mutation {
+  createPost(authorId: Int!, content: String!, latitude: Float!, longitude: Float!, published: Boolean = true, title: String!): Post
   createUser(email: String!, name: String!): User!
 }
 
+type Post {
+  authorId: Int
+  content: String
+  createdAt: Date
+  id: ID
+  latitude: Float
+  longitude: Float
+  published: Boolean
+  title: String
+}
+
 type Query {
-  users(world: String): [User]
+  users(id: Int!): [User]
 }
 
 type User {

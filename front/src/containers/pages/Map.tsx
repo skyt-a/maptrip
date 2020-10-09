@@ -1,34 +1,25 @@
-import { useMapboxRef } from 'hooks/mapbox/useMapboxRef';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
+import { useSetUpMapboxRef } from 'hooks/mapbox/useSetupMapboxRef';
 import styled from 'styled-components';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import MapMenu from 'presentations/organisms/MapMenu';
 import { usePutMarkerOnMapbox } from 'hooks/mapbox/usePutMarkerOnMapbox';
-import { useQuery, useMutation, useQueryCache } from 'react-query'
-import { request, gql } from "graphql-request";
+import { useQuery, useMutation, useQueryCache } from 'react-query';
+import { request, gql } from 'graphql-request';
+import EnterMarkerInfo from 'containers/organisms/EnterMarkerInfo';
 
-const endpoint = "http://localhost:4000/graphql";
+const endpoint = 'http://localhost:4000/graphql';
 
 /**
  * マップ画面
  */
 const Map: FC<unknown> = () => {
-  const ref = useMapboxRef();
+  const [map, ref, setUpMap] = useSetUpMapboxRef();
   const cache = useQueryCache();
-  const todosQuery = useQuery('todos', async() => {
-    const posts = await request(endpoint, gql`
-      query getUser {
-        users {
-          id
-          name
-          email
-        }
-      }
-    `)
-    console.log(posts)
-    return posts
-  })
+  useEffect(() => {
+    setUpMap();
+  }, [map, ref]);
 
   usePutMarkerOnMapbox();
 
@@ -36,6 +27,7 @@ const Map: FC<unknown> = () => {
     <>
       <MapDiv ref={ref} />
       <MapMenu />
+      <EnterMarkerInfo />
     </>
   );
 };

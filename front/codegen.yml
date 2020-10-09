@@ -1,0 +1,15 @@
+overwrite: true
+schema:
+  - http://localhost:4000/graphql
+documents:
+  - ./src/graphql/*.graphql
+generates:
+  ./src/gen/graphql-client-type.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+  ./src/gen/graphql-client-query.ts:
+    plugins:
+      - typescript-document-nodes
+    config:
+      namingConvention: "keep"
